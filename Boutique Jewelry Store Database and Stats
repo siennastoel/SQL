@@ -1,0 +1,31 @@
+--Create a boutqiue jewelry store database
+
+CREATE TABLE jewelry_boutique (id INTEGER PRIMARY KEY, jewelry_piece TEXT, instock INTEGER, yesterdays_sales INTEGER, price INTEGER);
+
+INSERT INTO jewelry_boutique VALUES 
+(1, "gold_ring_sizeS", 10, 5, 30),
+(2, "gold_ring_sizeM", 9, 1, 30),
+(3, "gold_ring_sizeL", 10, 0, 30),
+(4, "silver_ring_sizeS", 9, 1, 30),
+(5, "silver_ring_sizeM", 8, 2, 30),
+(6, "silver_ring_sizeL", 8, 2, 30),
+(7, "gold_hoops_sizeS", 9, 1, 50),
+(8, "silver_hoops_sizeS", 7, 3, 50),
+(9, "gold_chain_sizeS", 6, 4, 90),
+(10, "gold_hoops_sizeM", 3, 7, 75),
+(11, "silve_hoops_sizeM", 5, 5, 75),
+(12, "gold_chain_sizeM", 8, 2, 110),
+(13, "silver_chain_sizeS", 7, 3, 90),
+(14, "silver_chain_sizeM", 8, 2, 110),
+(15, "gold_bracelt_OSA", 2, 8, 50),
+(16, "silver_bracelet_OSA", 10, 0, 50)
+;
+
+-- display the database ordered by price
+SELECT * FROM jewelry_boutique ORDER BY price;
+
+-- display the amount of product sold yesterday and the profit of the store
+SELECT SUM(yesterdays_sales), SUM(price) FROM jewelry_boutique;
+
+-- what are the 5 most popular pieces sold?
+SELECT jewelry_piece, yesterdays_sales, price FROM jewelry_boutique ORDER BY yesterdays_sales desc limit 5;
