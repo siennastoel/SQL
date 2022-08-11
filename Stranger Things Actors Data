@@ -1,0 +1,48 @@
+-- First I wanted to take a handful of characters to see their stats for the show and when they started acting. 
+CREATE TABLE stranger_things_actors
+(id INTEGER PRIMARY KEY, name TEXT, amt_episodes INTEGER, seasons_in INTEGER, career_start_year INTEGER, upside_down TEXT);
+
+INSERT INTO stranger_things_actors
+VALUES
+(1, "Millie Bobby Brown", 34, 4, 2013, "yes"),
+(2, "Finn Wolfhard", 34, 4, 2016, "yes"),
+(3, "Winona Ryder", 35, 4, 1986, "no"),
+(4, "David Harbour", 35, 4, 1999, "no"),
+(5, "Cara Buono", 30, 4, 1992, "no"),
+(6, "Sadie Sink", 26, 4, 2012, "yes"),
+(7, "Priah Ferguson", 21, 4, 2015, "no"),
+(8, "Joseph Quinn", 8, 1, 2015, "yes"),
+(9, "Eduardo Franco", 8, 1, 2017, "no");
+
+-- Then I was curious what professions they have had. 
+CREATE TABLE profession (id INTEGER PRIMARY KEY, actors_id INTEGER, profession TEXT);
+INSERT INTO profession
+VALUES
+(1, 1, "tv_film"),
+(2, 2, "tv_film"),
+(3, 2, "musician"),
+(4, 3, "tv_film"),
+(5, 4, "tv_film"),
+(6, 4, "broadway"),
+(7, 5, "tv_film"),
+(8, 6, "tv_film"),
+(9, 6, "broadway"),
+(10, 7, "tv_film"),
+(11, 8, "tv_film"),
+(12, 8, "theater"),
+(13, 9, "tv_film");
+
+-- I wanted to see which actors on Stranger Things had also been in a broadway production.
+SELECT stranger_things_actors.name, profession.profession
+FROM stranger_things_actors
+JOIN profession
+ON stranger_things_actors.id = profession.actors_id
+WHERE profession = "broadway";
+
+-- And just for fun, I wanted to see which actors had characters who had been to the "upside down" also had the "tv_film" profession.
+SELECT name, amt_episodes, upside_down, profession.profession
+FROM stranger_things_actors
+JOIN profession
+ON stranger_things_actors.id = profession.actors_id
+WHERE upside_down = "yes"
+AND profession = "tv_film";
