@@ -1,0 +1,48 @@
+Querying a database with multiple tables to look at customer and order stats. 
+
+-- How many customers place an order in January?
+SELECT COUNT(orderid)
+FROM BIT_DB.JanSales;
+
+-- How many of those orders were for an iPhone?
+SELECT Product, COUNT(Quantity)
+FROM BIT_DB.JanSales
+WHERE Product='iPhone';
+
+Select the customer account numbers for all of the orders place in February. 
+SELECT cust.acctnum
+FROM BIT_DB.customers cust
+INNER JOIN BIT_DB.FebSales feb
+ON cust.order_id=feb.orderID;
+
+-- What was the cheapest product sold in January and what was its price?
+SELECT MIN(price)
+FROM BIT_DB.JanSales;
+SELECT distinct Product, price
+FROM BIT_DB.JanSales
+WHERE price IN (SELECT MIN(price)
+FROM BIT_DB.JanSales);
+
+-- What was the total revenue for each product sold in January?
+SELECT SUM(quantity)*price as revenue,
+Product
+FROM JanSales
+GROUP BY Product;
+
+-- Which products were sold in February at 548 Lincoln St, Seattle, WA 98101, how many of each were sold, and what was the total revenue?
+SELECT SUM(Quantity),
+Product,
+SUM(Quantity)*price as revenue
+FROM BIT_DB.FebSales
+WHERE location = "548 Lincoln St, Seattle, WA 98101"
+GROUP BY product;
+
+-- How many customers ordered more than 2 products at a time in February, and what was the average amount spent for those customers?
+
+SELECT
+COUNT(cust.acctnum),
+AVG(quantity*price)
+FROM BIT_DB.FebSales Feb
+LEFT JOIN BIT_DB.customers cust
+ON Feb.orderID=cust.order_id
+WHERE Feb.Quantity>2;
